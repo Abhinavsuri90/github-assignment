@@ -41,7 +41,21 @@
         }
         section { margin-top: 2rem; }
         h2 { color: #1e3a5f; }
-        ul li { margin-bottom: 0.4rem; }
+        ul li, ol li { margin-bottom: 0.4rem; }
+        code {
+            background: #e4e7eb;
+            padding: 0.1rem 0.35rem;
+            border-radius: 4px;
+            font-family: Consolas, "Courier New", monospace;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            margin-top: 1rem;
+        }
+        th, td { border: 1px solid #cbd2d9; padding: 0.6rem 0.8rem; text-align: left; }
+        th { background: #1e3a5f; color: #ffffff; }
     </style>
 </head>
 <body>
@@ -72,6 +86,28 @@
                 <li><strong>Collaboration:</strong> several people can work on the same project and combine their work cleanly.</li>
                 <li><strong>Recovery:</strong> mistakes can be undone by returning to a previous commit.</li>
             </ul>
+        </section>
+
+        <section>
+            <h2>The Everyday Git Workflow</h2>
+            <p>Most day-to-day work with Git follows the same four steps:</p>
+            <ol>
+                <li><strong>Modify</strong> files in the working directory.</li>
+                <li><strong>Stage</strong> the changes that belong together using <code>git add</code>.</li>
+                <li><strong>Commit</strong> the staged snapshot with a clear message using <code>git commit</code>.</li>
+                <li><strong>Push</strong> the commits to a remote repository on GitHub using <code>git push</code>.</li>
+            </ol>
+            <table>
+                <thead>
+                    <tr><th>Area</th><th>What it holds</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Working directory</td><td>The files currently being edited</td></tr>
+                    <tr><td>Staging area</td><td>Changes selected for the next commit</td></tr>
+                    <tr><td>Local repository</td><td>The committed history on this computer</td></tr>
+                    <tr><td>Remote repository</td><td>The shared copy hosted on GitHub</td></tr>
+                </tbody>
+            </table>
         </section>
     </main>
 </body>
