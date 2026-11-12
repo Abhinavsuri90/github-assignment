@@ -1,0 +1,277 @@
+===============================================================================
+  GIT COMMAND REFERENCE
+  Git & GitHub Workflow Assignment - Abhinav Suri
+  Project   : git-github-workflow-assignment
+  Remote    : https://github.com/Abhinavsuri90/github-assignment
+  Git       : git version 2.50.1 (macOS)
+  Date      : 13 November 2026
+===============================================================================
+
+This file lists every Git command used while completing the assignment, in
+the order of the workflow. For each command it records the syntax, what the
+command does and the step of the assignment in which it was used.
+
+Commit sequence produced on the main branch (oldest first):
+  1. Initial project setup
+  2. Update homepage content
+  3. Add feature page content                       (made on branch "feature")
+  4. Merge feature branch into main                 (merge commit)
+  5. Add .gitignore for log files and temp directory
+  6. Add footer to homepage                         (later undone with reset)
+  7. Add footer to homepage and about page          (replaces commit 6)
+  8. Add Git command reference                      (adds this file)
+
+
+-------------------------------------------------------------------------------
+1. REPOSITORY INITIALIZATION
+-------------------------------------------------------------------------------
+
+git --version
+  What it does : Prints the installed Git version.
+  Where used   : Environment check before starting (git version 2.50.1).
+
+git config --global user.name
+  What it does : Shows the author name that Git records in every commit.
+  Where used   : Environment check, to confirm commits would carry the
+                 correct author name.
+
+git init -b main
+  What it does : Creates a new, empty Git repository (the hidden .git
+                 folder) in the current directory. The -b option names the
+                 first branch "main" instead of relying on a default.
+  Where used   : Step 1 - run inside git-github-workflow-assignment/ after
+                 index.html and about.html had been created.
+
+git rev-parse --show-toplevel
+  What it does : Prints the root folder of the repository Git is using.
+  Where used   : Step 1 - to verify that the new project is its own
+                 repository and not part of a parent folder's repository.
+
+git branch --show-current
+  What it does : Prints the name of the branch that is currently checked out.
+  Where used   : Step 1 and Step 5 - to confirm the current branch is main.
+
+
+-------------------------------------------------------------------------------
+2. STAGING AND COMMITS
+-------------------------------------------------------------------------------
+
+git add <file> [<file> ...]
+  What it does : Copies the current state of the named files into the
+                 staging area so they are included in the next commit.
+  Where used   : git add index.html about.html     (Step 2A, initial commit)
+                 git add index.html                (Step 2B and Step 4)
+                 git add about.html                (Step 2C and Step 4)
+                 git add .gitignore                (Step 3)
+                 git add git_commands.txt          (Step 6)
+
+git commit -m "<message>"
+  What it does : Records the staged changes as a new commit with the given
+                 message.
+  Where used   : git commit -m "Initial project setup"           (Step 2A)
+                 git commit -m "Update homepage content"         (Step 2B)
+                 git commit -m "Add feature page content"        (Step 2C)
+                 git commit -m "Add .gitignore for log files and temp directory"
+                                                                 (Step 3)
+                 git commit -m "Add footer to homepage"          (Step 4)
+                 git commit -m "Add footer to homepage and about page"
+                                                                 (Step 4)
+                 git commit -m "Add Git command reference"       (Step 6)
+
+git diff --stat
+  What it does : Summarises unstaged changes: which files changed and how
+                 many lines were added or removed.
+  Where used   : Step 2B - to review the homepage edit before staging it.
+
+git diff --cached --stat
+  What it does : Summarises the changes that are staged for the next commit.
+  Where used   : Step 4 - to prove that the footer change was still staged
+                 after the soft reset.
+
+
+-------------------------------------------------------------------------------
+3. BRANCH MANAGEMENT
+-------------------------------------------------------------------------------
+
+git branch <name>
+  What it does : Creates a new branch pointing at the current commit,
+                 without switching to it.
+  Where used   : git branch feature  (Step 2C)
+
+git checkout <branch>
+  What it does : Switches the working directory to the named branch.
+  Where used   : git checkout feature  (Step 2C, before editing about.html)
+                 git checkout main     (Step 2D, before merging)
+
+git branch
+  What it does : Lists local branches; an asterisk marks the current one.
+  Where used   : Step 2C and Step 2E.
+
+git branch -M main
+  What it does : Renames the current branch to "main" (forcing the rename
+                 if needed). Because the repository was created with -b main
+                 the branch name was already correct; the command was run to
+                 make sure the primary branch is main before pushing.
+  Where used   : Step 5.
+
+git branch -a
+  What it does : Lists local branches together with remote-tracking
+                 branches (remotes/origin/...).
+  Where used   : Step 5 - after pushing, to show origin/main and
+                 origin/feature.
+
+git branch -vv
+  What it does : Lists local branches with their latest commit and the
+                 remote branch each one tracks.
+  Where used   : Step 5 - to confirm main tracks origin/main and feature
+                 tracks origin/feature.
+
+
+-------------------------------------------------------------------------------
+4. MERGE OPERATIONS
+-------------------------------------------------------------------------------
+
+git merge --no-ff <branch> -m "<message>"
+  What it does : Combines the history of <branch> into the current branch.
+                 --no-ff ("no fast-forward") always creates a merge commit,
+                 so the history keeps a visible record that the work was
+                 developed on a separate branch. -m supplies the merge
+                 commit message.
+  Where used   : git merge --no-ff feature -m "Merge feature branch into main"
+                 (Step 2D, run while on main)
+
+
+-------------------------------------------------------------------------------
+5. HISTORY AND STATUS
+-------------------------------------------------------------------------------
+
+git status
+  What it does : Shows the current branch, staged changes, unstaged changes
+                 and untracked files.
+  Where used   : After almost every step to verify the state of the
+                 repository.
+
+git log --oneline
+  What it does : Shows the commit history, one line per commit (short hash
+                 and message), with branch labels next to the commits they
+                 point to.
+  Where used   : Steps 2A-2E and Step 4.
+
+git log --oneline --graph --all
+  What it does : Draws the history of all branches as a text graph, showing
+                 where feature branched off and where it was merged back.
+  Where used   : Step 2E and Step 4.
+
+git ls-files
+  What it does : Lists the files that Git is tracking.
+  Where used   : Step 3 - to confirm that no log or temp files were tracked.
+
+
+-------------------------------------------------------------------------------
+6. .GITIGNORE
+-------------------------------------------------------------------------------
+
+.gitignore contents:
+    *.log      -> ignores every file ending in .log, in any folder
+    temp/      -> ignores the temp directory and everything inside it
+
+Sample files created to test the rules (shell commands, not Git commands):
+    echo "..." > debug.log
+    echo "..." > error.log
+    mkdir temp && echo "..." > temp/draft-notes.txt
+
+git status
+  What it does : Before .gitignore existed, it listed debug.log, error.log
+                 and temp/ as untracked. After .gitignore was created, only
+                 .gitignore itself was listed.
+  Where used   : Step 3.
+
+git check-ignore -v <path> [<path> ...]
+  What it does : Reports whether a path is ignored and, with -v, which
+                 file, line and pattern caused it to be ignored.
+  Where used   : git check-ignore -v debug.log error.log temp/draft-notes.txt
+                 (all three matched .gitignore)
+                 git check-ignore -v index.html about.html
+                 (no output and exit code 1, i.e. project files are NOT
+                 ignored)
+
+git status --ignored
+  What it does : Shows the normal status plus a separate "Ignored files"
+                 section.
+  Where used   : Step 3 - debug.log, error.log and temp/ appear under
+                 "Ignored files".
+
+
+-------------------------------------------------------------------------------
+7. UNDO OPERATIONS
+-------------------------------------------------------------------------------
+
+git reset --soft HEAD~1
+  What it does : Moves the current branch back by one commit (HEAD~1 means
+                 "the parent of the current commit"). With --soft, the
+                 working directory and the staging area are left untouched,
+                 so the changes from the removed commit stay staged and
+                 nothing is lost.
+  Where used   : Step 4 - the commit "Add footer to homepage" was removed
+                 from main. git log --oneline no longer listed it, while
+                 git status still showed index.html under "Changes to be
+                 committed". The footer was then also added to about.html
+                 and both files were committed together as
+                 "Add footer to homepage and about page".
+
+  git reset --soft compared with git revert:
+    - git reset --soft HEAD~1 rewrites the branch history by moving the
+      branch pointer backwards. The undone commit disappears from the
+      branch, and its changes remain staged. It is suitable only for
+      commits that have NOT been pushed or shared, which is why it was
+      used before the repository was pushed.
+    - git revert <commit> does not rewrite history. It creates a NEW commit
+      that applies the opposite of the chosen commit, so the original
+      commit and its reversal both remain in the history. It is the safe
+      way to undo a commit that has already been pushed to a shared branch.
+
+  (Destructive options such as git reset --hard were not used.)
+
+
+-------------------------------------------------------------------------------
+8. REMOTE CONFIGURATION
+-------------------------------------------------------------------------------
+
+git remote -v
+  What it does : Lists configured remotes with their fetch and push URLs.
+  Where used   : Step 5 - first to confirm no remote existed, then to verify
+                 the URL of origin after it was added.
+
+git remote add origin https://github.com/Abhinavsuri90/github-assignment.git
+  What it does : Registers the existing GitHub repository as a remote named
+                 "origin".
+  Where used   : Step 5.
+
+
+-------------------------------------------------------------------------------
+9. PUSH AND VERIFICATION
+-------------------------------------------------------------------------------
+
+git push -u origin main
+  What it does : Uploads the main branch to origin. -u (--set-upstream)
+                 links local main to origin/main so later pushes and pulls
+                 need no arguments.
+  Where used   : Step 5.
+
+git push -u origin feature
+  What it does : Uploads the feature branch to origin and sets it to track
+                 origin/feature.
+  Where used   : Step 5.
+
+git ls-remote --heads origin
+  What it does : Asks GitHub directly which branches exist on the remote and
+                 which commit each one points to.
+  Where used   : Step 5 - both refs/heads/main and refs/heads/feature were
+                 listed with the same commit hashes as the local branches.
+
+git push
+  What it does : Pushes the current branch to its upstream (origin/main),
+                 which was configured earlier with -u.
+  Where used   : Step 6 - to publish the commit that added this file.
+
+===============================================================================
