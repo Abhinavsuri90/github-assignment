@@ -41,6 +41,12 @@
         section { margin-top: 2rem; }
         h2 { color: #1e3a5f; }
         ul li { margin-bottom: 0.4rem; }
+        code {
+            background: #e4e7eb;
+            padding: 0.1rem 0.35rem;
+            border-radius: 4px;
+            font-family: Consolas, "Courier New", monospace;
+        }
     </style>
 </head>
 <body>
@@ -62,6 +68,36 @@
                 be practised, from the first commit to publishing the project on GitHub.
             </p>
         </div>
+
+        <section>
+            <h2>Branching Strategy</h2>
+            <p>
+                The project uses two branches. The <code>main</code> branch always contains stable,
+                reviewed content. New work is carried out on a separate <code>feature</code> branch
+                and is merged back into <code>main</code> only when it is complete. This keeps the
+                main branch clean and makes every change easy to trace.
+            </p>
+        </section>
+
+        <section>
+            <h2>What This Project Demonstrates</h2>
+            <ul>
+                <li>Creating a local repository and recording changes through commits</li>
+                <li>Developing a change on a feature branch and merging it into <code>main</code></li>
+                <li>Excluding log files and temporary folders with a <code>.gitignore</code> file</li>
+                <li>Undoing a commit safely while keeping the work it contained</li>
+                <li>Publishing the repository and its branches to GitHub</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Tools Used</h2>
+            <ul>
+                <li>HTML5 and CSS for the web pages</li>
+                <li>Git for local version control</li>
+                <li>GitHub for remote hosting of the repository</li>
+            </ul>
+        </section>
     </main>
 </body>
 </html>
