@@ -1,0 +1,5 @@
+# Ignore all log files generated while running or testing the site
+*.log
+
+# Ignore the temporary working directory and everything inside it
+temp/
